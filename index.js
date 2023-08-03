@@ -53,7 +53,7 @@ async function submitForm() {
 
 // Schedule the task to run at 05:00 PM IST every day
 cron.schedule(
-	'19 5 * * *',
+	'32 5 * * *',
 	() => {
 		submitForm()
 			.then(() => {
