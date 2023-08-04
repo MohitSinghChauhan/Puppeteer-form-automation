@@ -3,6 +3,8 @@ const express = require('express');
 const puppeteer = require('puppeteer');
 const cron = require('node-cron');
 const moment = require('moment-timezone');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const app = express();
 const port = 3000; // Change this to the desired port number
@@ -19,8 +21,8 @@ app.get('/submit-form', async (req, res) => {
 
 async function submitForm() {
 	const data = {
-		email: 'mohitchauhan.hbtu@gmail.com',
-		name: 'Mohit Singh Chauhan',
+		email: process.env.EMAIL,
+		name: process.env.NAME,
 		leaveReason: '',
 		remarks: '',
 		onLeave: 'No',
@@ -53,7 +55,7 @@ async function submitForm() {
 
 // Schedule the task to run at 05:00 PM IST every day
 cron.schedule(
-	'32 5 * * *',
+	process.env.CRON_TIME,
 	() => {
 		submitForm()
 			.then(() => {
