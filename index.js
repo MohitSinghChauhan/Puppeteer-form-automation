@@ -20,6 +20,10 @@ app.get('/submit-form', async (req, res) => {
 });
 
 async function submitForm() {
+
+	const currentTimestamp = moment().tz('Asia/Kolkata').format('DD-MM-YYYY hh:mm:ss A');
+	console.log(currentTimestamp);
+
 	const data = {
 		email: process.env.EMAIL,
 		name: process.env.NAME,
