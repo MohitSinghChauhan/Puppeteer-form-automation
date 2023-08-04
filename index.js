@@ -33,7 +33,7 @@ async function submitForm() {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
 	await page.goto(
-		'https://docs.google.com/forms/d/e/1FAIpQLSd_ejqtz_OMStoFmBteVRtiA9MMYQNzuaKXlO-ma6fRlAIJ7A/viewform',
+		process.env.FORM_URL,
 		{ waitUntil: 'networkidle2' }
 	);
 	await page.waitForSelector("input[type='email']", { visible: true });
@@ -53,9 +53,12 @@ async function submitForm() {
 	await browser.close();
 }
 
+
+const randomMinute = Math.floor(Math.random() * 6);
+
 // Schedule the task to run at 05:00 PM IST every day
 cron.schedule(
-	process.env.CRON_TIME,
+	`${randomMinute} 17 * * *`,
 	() => {
 		submitForm()
 			.then(() => {
